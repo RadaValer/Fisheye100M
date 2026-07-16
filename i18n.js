@@ -1,0 +1,442 @@
+(function () {
+  var dict = {
+    ro: {
+      'nav.problema': 'Problema',
+      'nav.solutia': 'Soluția',
+      'nav.functionare': 'Cum funcționează',
+      'nav.specificatii': 'Specificații',
+      'nav.barca': 'Barca însoțitoare',
+      'nav.contact': 'Contact',
+      'nav.control': 'Panou de control',
+
+      'hero.eyebrow': 'Robotică subacvatică autonomă',
+      'hero.title': 'Ochiul care coboară acolo unde omul nu poate.',
+      'hero.lede': 'Fisheye100M este un submarin autonom capabil să coboare la <strong>100&nbsp;metri</strong> adâncime, să urmărească și să filmeze fauna acvatică, și să revină singur la suprafață pentru reîncărcare — fără scafandru, fără intervenție umană.',
+      'hero.cta1': 'Cum funcționează',
+      'hero.cta2': 'Vezi specificațiile',
+
+      'problema.kicker': '01 — Problema',
+      'problema.title': 'Cea mai mare parte a apei de pe Pământ rămâne necunoscută.',
+      'problema.p1': 'Oceanele, lacurile și râurile acoperă mai mult de două treimi din suprafața Pământului, dar rămân, în mare parte, necunoscute. Nu știm cu precizie câți pești trăiesc sub suprafața unui lac de munte, cum migrează ei odată cu schimbarea temperaturii apei, sau cum se adaptează la modificările din mediul lor.',
+      'problema.p2': 'Motivul e simplu: a ajunge acolo jos este <strong>greu, scump și poate periculos</strong>.',
+      'problema.stat1_num': '&gt;2/3',
+      'problema.stat1_label': 'din suprafața Pământului e acoperită de apă',
+      'problema.stat2_num': '0',
+      'problema.stat2_label': 'scafandri necesari cu Fisheye100M',
+      'problema.stat3_num': '100m',
+      'problema.stat3_label': 'adâncime maximă de operare',
+
+      'solutia.kicker': '02 — Soluția',
+      'solutia.title': 'Fisheye100M rezolvă această problemă.',
+      'solutia.lede': 'Submarinul coboară singur, urmărește și filmează fauna acvatică, apoi revine la suprafață pentru reîncărcare — complet autonom. Este compus din trei subsisteme principale, care lucrează împreună pentru a menține adâncimea, direcția și legătura cu operatorul.',
+      'solutia.card1_title': 'Corp presurizat',
+      'solutia.card1_desc': 'Adăpostește electronica, bateriile și microcontrollerul. Etanș la 10&nbsp;bar — tot ce e sensibil la apă rămâne în interior.',
+      'solutia.card2_title': 'Sistem de balast',
+      'solutia.card2_desc': 'Patru cilindri cu piston controlează adâncimea. Un algoritm ajustează poziția lor în funcție de presiunea citită, în timp real.',
+      'solutia.card3_title': 'Propulsie',
+      'solutia.card3_desc': 'Două motoare acționează elicele printr-un sistem planetar. Direcția este controlată diferențial, fără cârmă mobilă.',
+
+      'functionare.kicker': '03 — Cum funcționează',
+      'functionare.title': 'De la coborâre la reîncărcare, fără o mână umană.',
+      'functionare.step1_label': 'Pasul 01',
+      'functionare.step1_title': 'Control activ al adâncimii',
+      'functionare.step1_desc': 'Microcontrollerul citește adâncimea din senzorul de presiune extern și ajustează poziția pistoanelor pentru a menține submarinul la adâncimea dorită. Când pistonul se retrage, apa intră și submarinul coboară; procesul invers îl ridică.',
+      'functionare.step2_label': 'Pasul 02',
+      'functionare.step2_title': 'Propulsie și direcție',
+      'functionare.step2_desc': 'Două motoare 895, montate în zona uscată, rotesc elicele prin sisteme de reducție planetară 3:1. Axele traversează peretele etanș prin simering-uri duble de viton. Direcția e controlată diferențial, fără piese mobile expuse.',
+      'functionare.step3_label': 'Pasul 03',
+      'functionare.step3_title': 'Vedere și iluminare adaptivă',
+      'functionare.step3_desc': 'Senzorul de lumină ambientală e citit continuu. Sub un prag definit, microcontrollerul pornește la nevoie cele șase LED-uri COB frontale. Camera înregistrează și detectează mișcarea faunei din câmpul vizual.',
+      'functionare.step4_label': 'Pasul 04',
+      'functionare.step4_title': 'Legătură cu suprafața',
+      'functionare.step4_desc': 'Barca de la suprafață menține legătura radio prin LoRa — primește telemetria și transmite comenzi. Când misiunea se încheie, submarinul urcă singur pentru reîncărcare.',
+
+      'specificatii.kicker': '04 — Specificații',
+      'specificatii.title': 'Fiecare subsistem, în detaliu.',
+      'specificatii.tab_corp': 'Corp & structură',
+      'specificatii.tab_balast': 'Balast',
+      'specificatii.tab_propulsie': 'Propulsie',
+      'specificatii.tab_alimentare': 'Alimentare',
+      'specificatii.tab_electronica': 'Electronică & control',
+
+      'spec.corp.1': '<span>Corp principal</span><span>1× țeavă aluminiu 6061, Ø89mm, perete 3mm, lungime 66cm</span>',
+      'spec.corp.2': '<span>Module balast</span><span>4× țevi PPR Ø63mm ext / Ø42mm int, lungime 66cm</span>',
+      'spec.corp.3': '<span>Joncțiune țevi–emisfere</span><span>2× conectori imprimați 3D ASA, Ø250mm</span>',
+      'spec.corp.4': '<span>Capete submarin</span><span>2× emisfere ASA imprimate 3D, Ø250mm, perete 15mm, cu piloni interni</span>',
+      'spec.corp.5': '<span>Ferestre frontale</span><span>Geam acrilic 4mm, etanșate cu O-ring</span>',
+      'spec.corp.6': '<span>Structură portantă</span><span>Tije inox sudate</span>',
+      'spec.corp.7': '<span>Presiune maximă</span><span>10 bar (100m adâncime)</span>',
+      'spec.corp.8': '<span>Etanșare îmbinări</span><span>O-ringuri pe toate joncțiunile statice</span>',
+      'spec.corp.9': '<span>Presetupe senzori / propulsoare</span><span>Alamă nichel, IP68</span>',
+      'spec.corp.10': '<span>Presetupe traversare cabluri</span><span>Alamă nichel, IP68, prin capace</span>',
+
+      'spec.balast.stat1_num': '2120N',
+      'spec.balast.stat1_label': 'forță teoretică disponibilă la 100m',
+      'spec.balast.stat2_num': '1385N',
+      'spec.balast.stat2_label': 'forță necesară la 100m',
+      'spec.balast.stat3_num': '1.53×',
+      'spec.balast.stat3_label': 'marjă de siguranță',
+      'spec.balast.stat4_num': '0W',
+      'spec.balast.stat4_label': 'consum la menținerea adâncimii',
+      'spec.balast.1': '<span>Cilindri</span><span>4× PPR Ø63mm / Ø42mm interior, lungime 60cm (25cm cursă piston)</span>',
+      'spec.balast.2': '<span>Actuație</span><span>4× NEMA 17, câte unul per cilindru</span>',
+      'spec.balast.3': '<span>Reducție</span><span>4× planetar 6:1, modul 0.8mm, unghi de presiune 20°</span>',
+      'spec.balast.4': '<span>Șurub de translație</span><span>4× T8×8 P2, 300mm</span>',
+      'spec.balast.5': '<span>Piuliță</span><span>4× alamă flanșată T8, fixată pe piston cu șuruburi M3</span>',
+      'spec.balast.6': '<span>Cuplaj</span><span>4× flexibil 8mm–8mm, reductor → bară T8</span>',
+      'spec.balast.7': '<span>Piston</span><span>Ø40mm, lungime 60mm, 2× O-ring 36×4mm per piston</span>',
+      'spec.balast.8': '<span>Drivere</span><span>2× DRV8825, stepper</span>',
+      'spec.balast.9': '<span>Notă</span><span>Șurubul auto-blocant menține adâncimea fără consum energetic</span>',
+
+      'spec.propulsie.1': '<span>Motoare</span><span>2× motor 895, 24V, 10.000 rpm</span>',
+      'spec.propulsie.2': '<span>Reducție</span><span>2× planetar 3:1</span>',
+      'spec.propulsie.3': '<span>Elice</span><span>2× Ø85mm, pas 90mm, 4 pale, ASA imprimat 3D</span>',
+      'spec.propulsie.4': '<span>Etanșare ax</span><span>2× simering Viton dublu + cavitate unsoare marină</span>',
+      'spec.propulsie.5': '<span>Drivere</span><span>2× BTS7960, H-bridge per motor</span>',
+      'spec.propulsie.6': '<span>Direcție</span><span>Control diferențial între cele două motoare</span>',
+
+      'spec.alimentare.1': '<span>Baterii propulsie</span><span>2P6S Molicel INR21700-P42A — 12 celule, 21.6V</span>',
+      'spec.alimentare.2': '<span>Baterii electronice</span><span>6P2S Molicel INR21700-P42A — 12 celule, 7.4V</span>',
+
+      'spec.electronica.1': '<span>Computer principal</span><span>Raspberry Pi 5, 4GB — procesare video, interfață web, coordonare sistem</span>',
+      'spec.electronica.2': '<span>Microcontroller auxiliar</span><span>Raspberry Pi Pico W</span>',
+      'spec.electronica.3': '<span>Cameră</span><span>Raspberry Pi Camera Module</span>',
+      'spec.electronica.4': '<span>IMU 9 axe</span><span>ICM-20948 — accelerometru, giroscop</span>',
+      'spec.electronica.5': '<span>Mediu intern</span><span>BME280 — presiune, temperatură, umiditate</span>',
+      'spec.electronica.6': '<span>Temperatură/umiditate suplimentară</span><span>DHT11 ×1 interior + DHT11 ×2 în modulele de balast față/spate</span>',
+      'spec.electronica.7': '<span>Timp real</span><span>DS3231</span>',
+      'spec.electronica.8': '<span>Lumină ambientală</span><span>GY-302 (BH1750) — control automat LED-uri</span>',
+      'spec.electronica.9': '<span>Temperatură apă</span><span>DS18B20, montat exterior</span>',
+      'spec.electronica.10': '<span>Adâncime</span><span>Senzor de presiune extern, calcul în timp real</span>',
+      'spec.electronica.11': '<span>Iluminare</span><span>6× LED COB, 10W</span>',
+      'spec.electronica.12': '<span>Poziționare la suprafață</span><span>GPS SIM808 + GPRS</span>',
+      'spec.electronica.13': '<span>Comunicație</span><span>LoRa SX1278, 433MHz</span>',
+      'spec.electronica.14': '<span>Drivere stepper</span><span>2× DRV8825 (balast)</span>',
+      'spec.electronica.15': '<span>Drivere motoare</span><span>2× BTS7960 (propulsie)</span>',
+
+      'barca.kicker': '05 — Concept',
+      'barca.title': 'Barca însoțitoare',
+      'barca.lede': 'O platformă autonomă de suprafață cu rol de stație de urmărire și reîncărcare pentru submarin. Rămâne deasupra lui Fisheye100M, face releu de comunicație și îi asigură reîncărcarea autonomă la suprafață.',
+      'barca.1': '<span>Structură</span><span>Țevi PVC flotante — ușoară, modulară, rezistentă la coroziune</span>',
+      'barca.2': '<span>Propulsie</span><span>Diferențială, 2× motoare DC cu elice</span>',
+      'barca.3': '<span>Energie</span><span>Panou solar + baterii LiPo</span>',
+      'barca.4': '<span>Microcontroller</span><span>Raspberry Pi Pico W</span>',
+      'barca.5': '<span>Comunicație cu submarinul</span><span>LoRa SX1278, 433MHz</span>',
+      'barca.6': '<span>Poziționare</span><span>GPS propriu, urmărire traseu submarin</span>',
+      'barca.7': '<span>Andocare</span><span>Contacte electrice etanșe pentru reîncărcare</span>',
+
+      'cta.title': 'Vrei să afli mai multe despre proiect?',
+      'cta.lede': 'Fisheye100M este un proiect în dezvoltare activă — corp presurizat, balast, propulsie și electronică integrate într-un singur sistem autonom.',
+      'cta.btn': 'Ia legătura',
+
+      'footer.tagline': 'Submarin autonom de explorare subacvatică · 100m adâncime maximă',
+
+      'login.back': '← Înapoi la site',
+      'login.title': 'Autentificare operator',
+      'login.subtitle': 'Accesează panoul de control al flotei Fisheye100M.',
+      'login.emailLabel': 'Email',
+      'login.passwordLabel': 'Parolă',
+      'login.remember': 'Ține-mă minte',
+      'login.submit': 'Intră în control panel',
+      'login.demoNote': 'Acces demonstrativ — completează orice date pentru a continua.',
+      'login.error': 'Completează email și parolă pentru a continua.',
+
+      'dash.badge': 'Panou de control',
+      'dash.logout': 'Deconectare',
+      'dash.fleetTitle': 'Flota mea',
+      'dash.statusOnline': 'Online',
+      'dash.statusCharging': 'Reîncărcare',
+      'dash.statusOffline': 'Offline',
+      'dash.typeSubmarine': 'Submarin',
+      'dash.typeBoat': 'Barcă',
+      'dash.battery': 'Baterie',
+      'dash.batteryPropulsion': 'Propulsie (2P6S)',
+      'dash.batteryElectronics': 'Electronice (6P2S)',
+      'dash.cameraTitle': 'Cameră live',
+      'dash.cameraOfflineTitle': 'Cameră indisponibilă',
+      'dash.cameraOfflineHint': 'Vehiculul nu transmite imagine în acest moment.',
+      'dash.telemetryTitle': 'Telemetrie',
+      'dash.location': 'Locație exactă',
+      'dash.tempInternal': 'Temperatură internă',
+      'dash.tempExternal': 'Temperatură externă',
+      'dash.pressureInternal': 'Presiune internă',
+      'dash.pressureExternal': 'Presiune externă',
+      'dash.humidity': 'Umiditate interioară',
+      'dash.motor1': 'Curent motor 1',
+      'dash.motor2': 'Curent motor 2',
+      'dash.notAvailable': 'Indisponibil',
+      'dash.depthTitle': 'Adâncime curentă',
+      'dash.ledTitle': 'Control iluminare',
+      'dash.ledFront': 'LED frontale',
+      'dash.ledSideVert': 'LED laterale sus–jos',
+      'dash.ledSideHoriz': 'LED laterale stânga–dreapta',
+      'dash.ledLeft': 'Stânga',
+      'dash.ledRight': 'Dreapta',
+      'dash.ledUp': 'Sus',
+      'dash.ledDown': 'Jos',
+      'dash.moveTitle': 'Control mișcare',
+      'dash.moveForward': 'Înainte',
+      'dash.moveBack': 'Înapoi',
+      'dash.turnLeft': 'Virare stânga',
+      'dash.turnRight': 'Virare dreapta',
+      'dash.stop': 'Stop',
+      'dash.dive': 'Scufundare',
+      'dash.surface': 'Ridicare',
+      'dash.lastCommand': 'Ultima comandă',
+      'dash.noCommand': '—',
+      'dash.selectHint': 'Selectează un vehicul din flotă pentru a vedea telemetria și controalele.',
+      'dash.emptyBoatLed': 'Barca nu are LED-uri controlabile.',
+      'dash.emptyBoatDive': 'Bărcile rămân la suprafață — fără control de scufundare.',
+      'dash.locBalea': 'Lacul Bâlea, RO',
+
+      'vehicle.alpha': 'Fisheye100M — Alpha',
+      'vehicle.beta': 'Fisheye100M — Beta',
+      'vehicle.boat': 'Barca Fisheye',
+
+      'a11y.themeToggle': 'Comută tema deschis/întunecat',
+      'a11y.navToggle': 'Deschide meniul',
+    },
+    en: {
+      'nav.problema': 'Problem',
+      'nav.solutia': 'Solution',
+      'nav.functionare': 'How it works',
+      'nav.specificatii': 'Specifications',
+      'nav.barca': 'Companion boat',
+      'nav.contact': 'Contact',
+      'nav.control': 'Control Panel',
+
+      'hero.eyebrow': 'Autonomous underwater robotics',
+      'hero.title': "The eye that dives where humans can't.",
+      'hero.lede': 'Fisheye100M is an autonomous submarine capable of diving to <strong>100&nbsp;meters</strong> depth, tracking and filming aquatic wildlife, and returning to the surface on its own to recharge — no diver, no human intervention.',
+      'hero.cta1': 'How it works',
+      'hero.cta2': 'See specifications',
+
+      'problema.kicker': '01 — The problem',
+      'problema.title': "Most of Earth's water remains unexplored.",
+      'problema.p1': "Oceans, lakes and rivers cover more than two thirds of Earth's surface, yet remain largely unknown. We don't know precisely how many fish live beneath the surface of a mountain lake, how they migrate as water temperature changes, or how they adapt to changes in their environment.",
+      'problema.p2': 'The reason is simple: getting down there is <strong>hard, expensive, and potentially dangerous</strong>.',
+      'problema.stat1_num': '&gt;2/3',
+      'problema.stat1_label': "of Earth's surface is covered by water",
+      'problema.stat2_num': '0',
+      'problema.stat2_label': 'divers required with Fisheye100M',
+      'problema.stat3_num': '100m',
+      'problema.stat3_label': 'maximum operating depth',
+
+      'solutia.kicker': '02 — The solution',
+      'solutia.title': 'Fisheye100M solves this problem.',
+      'solutia.lede': "The submarine descends on its own, tracks and films aquatic wildlife, then returns to the surface to recharge — fully autonomous. It's built from three main subsystems that work together to maintain depth, direction, and the link with the operator.",
+      'solutia.card1_title': 'Pressure hull',
+      'solutia.card1_desc': 'Houses the electronics, batteries and microcontroller. Sealed to 10&nbsp;bar — everything water-sensitive stays inside.',
+      'solutia.card2_title': 'Ballast system',
+      'solutia.card2_desc': 'Four piston cylinders control depth. An algorithm adjusts their position based on the pressure reading, in real time.',
+      'solutia.card3_title': 'Propulsion',
+      'solutia.card3_desc': 'Two motors drive the propellers through a planetary gear system. Direction is controlled differentially, with no moving rudder.',
+
+      'functionare.kicker': '03 — How it works',
+      'functionare.title': 'From descent to recharge, without a human hand.',
+      'functionare.step1_label': 'Step 01',
+      'functionare.step1_title': 'Active depth control',
+      'functionare.step1_desc': 'The microcontroller reads depth from the external pressure sensor and adjusts piston position to keep the submarine at the target depth. As the piston retracts, water flows in and the submarine descends; the reverse process raises it.',
+      'functionare.step2_label': 'Step 02',
+      'functionare.step2_title': 'Propulsion and steering',
+      'functionare.step2_desc': 'Two 895 motors, mounted in the dry section, drive the propellers through 3:1 planetary gear systems. The shafts cross the pressure hull through dual Viton shaft seals. Steering is differential, with no exposed moving parts.',
+      'functionare.step3_label': 'Step 03',
+      'functionare.step3_title': 'Vision and adaptive lighting',
+      'functionare.step3_desc': 'The ambient light sensor is read continuously. Below a defined threshold, the microcontroller switches on the six front COB LEDs as needed. The camera records and detects wildlife motion within its field of view.',
+      'functionare.step4_label': 'Step 04',
+      'functionare.step4_title': 'Link to the surface',
+      'functionare.step4_desc': 'The surface boat maintains a LoRa radio link — receiving telemetry and sending commands. When the mission ends, the submarine surfaces on its own for recharging.',
+
+      'specificatii.kicker': '04 — Specifications',
+      'specificatii.title': 'Every subsystem, in detail.',
+      'specificatii.tab_corp': 'Hull & structure',
+      'specificatii.tab_balast': 'Ballast',
+      'specificatii.tab_propulsie': 'Propulsion',
+      'specificatii.tab_alimentare': 'Power',
+      'specificatii.tab_electronica': 'Electronics & control',
+
+      'spec.corp.1': '<span>Main hull</span><span>1× 6061 aluminum tube, Ø89mm, 3mm wall, 66cm length</span>',
+      'spec.corp.2': '<span>Ballast modules</span><span>4× PPR tubes, Ø63mm ext / Ø42mm int, 66cm length</span>',
+      'spec.corp.3': '<span>Tube–dome junction</span><span>2× 3D-printed ASA connectors, Ø250mm</span>',
+      'spec.corp.4': '<span>Submarine end caps</span><span>2× 3D-printed ASA domes, Ø250mm, 15mm wall, with internal ribs</span>',
+      'spec.corp.5': '<span>Front windows</span><span>4mm acrylic glass, O-ring sealed</span>',
+      'spec.corp.6': '<span>Load-bearing structure</span><span>Welded stainless steel rods</span>',
+      'spec.corp.7': '<span>Maximum pressure</span><span>10 bar (100m depth)</span>',
+      'spec.corp.8': '<span>Joint sealing</span><span>O-rings on all static joints</span>',
+      'spec.corp.9': '<span>Sensor / thruster glands</span><span>Nickel-plated brass, IP68</span>',
+      'spec.corp.10': '<span>Cable feedthroughs</span><span>Nickel-plated brass, IP68, through end caps</span>',
+
+      'spec.balast.stat1_num': '2120N',
+      'spec.balast.stat1_label': 'theoretical force available at 100m',
+      'spec.balast.stat2_num': '1385N',
+      'spec.balast.stat2_label': 'force required at 100m',
+      'spec.balast.stat3_num': '1.53×',
+      'spec.balast.stat3_label': 'safety margin',
+      'spec.balast.stat4_num': '0W',
+      'spec.balast.stat4_label': 'power draw to hold depth',
+      'spec.balast.1': '<span>Cylinders</span><span>4× PPR Ø63mm / Ø42mm internal, 60cm length (25cm piston stroke)</span>',
+      'spec.balast.2': '<span>Actuation</span><span>4× NEMA 17, one per cylinder</span>',
+      'spec.balast.3': '<span>Gear reduction</span><span>4× planetary 6:1, 0.8mm module, 20° pressure angle</span>',
+      'spec.balast.4': '<span>Lead screw</span><span>4× T8×8 P2, 300mm</span>',
+      'spec.balast.5': '<span>Nut</span><span>4× T8 flanged brass, fixed to the piston with M3 screws</span>',
+      'spec.balast.6': '<span>Coupling</span><span>4× flexible 8mm–8mm, gearbox → T8 rod</span>',
+      'spec.balast.7': '<span>Piston</span><span>Ø40mm, 60mm length, 2× O-ring 36×4mm per piston</span>',
+      'spec.balast.8': '<span>Drivers</span><span>2× DRV8825, stepper</span>',
+      'spec.balast.9': '<span>Note</span><span>The self-locking screw holds depth with zero power draw</span>',
+
+      'spec.propulsie.1': '<span>Motors</span><span>2× 895 motor, 24V, 10,000 rpm</span>',
+      'spec.propulsie.2': '<span>Gear reduction</span><span>2× planetary 3:1</span>',
+      'spec.propulsie.3': '<span>Propellers</span><span>2× Ø85mm, 90mm pitch, 4 blades, 3D-printed ASA</span>',
+      'spec.propulsie.4': '<span>Shaft sealing</span><span>2× dual Viton shaft seal + marine grease cavity</span>',
+      'spec.propulsie.5': '<span>Drivers</span><span>2× BTS7960, H-bridge per motor</span>',
+      'spec.propulsie.6': '<span>Steering</span><span>Differential control between the two motors</span>',
+
+      'spec.alimentare.1': '<span>Propulsion batteries</span><span>2P6S Molicel INR21700-P42A — 12 cells, 21.6V</span>',
+      'spec.alimentare.2': '<span>Electronics batteries</span><span>6P2S Molicel INR21700-P42A — 12 cells, 7.4V</span>',
+
+      'spec.electronica.1': '<span>Main computer</span><span>Raspberry Pi 5, 4GB — video processing, web interface, system coordination</span>',
+      'spec.electronica.2': '<span>Auxiliary microcontroller</span><span>Raspberry Pi Pico W</span>',
+      'spec.electronica.3': '<span>Camera</span><span>Raspberry Pi Camera Module</span>',
+      'spec.electronica.4': '<span>9-axis IMU</span><span>ICM-20948 — accelerometer, gyroscope</span>',
+      'spec.electronica.5': '<span>Internal environment</span><span>BME280 — pressure, temperature, humidity</span>',
+      'spec.electronica.6': '<span>Additional temp/humidity</span><span>DHT11 ×1 interior + DHT11 ×2 in the front/rear ballast modules</span>',
+      'spec.electronica.7': '<span>Real-time clock</span><span>DS3231</span>',
+      'spec.electronica.8': '<span>Ambient light</span><span>GY-302 (BH1750) — automatic LED control</span>',
+      'spec.electronica.9': '<span>Water temperature</span><span>DS18B20, externally mounted</span>',
+      'spec.electronica.10': '<span>Depth</span><span>External pressure sensor, real-time calculation</span>',
+      'spec.electronica.11': '<span>Lighting</span><span>6× COB LED, 10W</span>',
+      'spec.electronica.12': '<span>Surface positioning</span><span>GPS SIM808 + GPRS</span>',
+      'spec.electronica.13': '<span>Communication</span><span>LoRa SX1278, 433MHz</span>',
+      'spec.electronica.14': '<span>Stepper drivers</span><span>2× DRV8825 (ballast)</span>',
+      'spec.electronica.15': '<span>Motor drivers</span><span>2× BTS7960 (propulsion)</span>',
+
+      'barca.kicker': '05 — Concept',
+      'barca.title': 'Companion boat',
+      'barca.lede': 'An autonomous surface platform that acts as a tracking and recharging station for the submarine. It stays above Fisheye100M, relays communication, and provides autonomous surface recharging.',
+      'barca.1': '<span>Structure</span><span>Floating PVC tubes — lightweight, modular, corrosion-resistant</span>',
+      'barca.2': '<span>Propulsion</span><span>Differential, 2× DC motors with propellers</span>',
+      'barca.3': '<span>Power</span><span>Solar panel + LiPo batteries</span>',
+      'barca.4': '<span>Microcontroller</span><span>Raspberry Pi Pico W</span>',
+      'barca.5': '<span>Communication with submarine</span><span>LoRa SX1278, 433MHz</span>',
+      'barca.6': '<span>Positioning</span><span>Onboard GPS, submarine track tracking</span>',
+      'barca.7': '<span>Docking</span><span>Sealed electrical contacts for recharging</span>',
+
+      'cta.title': 'Want to learn more about the project?',
+      'cta.lede': 'Fisheye100M is an actively developed project — pressure hull, ballast, propulsion and electronics integrated into a single autonomous system.',
+      'cta.btn': 'Get in touch',
+
+      'footer.tagline': 'Autonomous underwater exploration submarine · 100m maximum depth',
+
+      'login.back': '← Back to site',
+      'login.title': 'Operator sign-in',
+      'login.subtitle': 'Access the Fisheye100M fleet control panel.',
+      'login.emailLabel': 'Email',
+      'login.passwordLabel': 'Password',
+      'login.remember': 'Remember me',
+      'login.submit': 'Enter control panel',
+      'login.demoNote': 'Demo access — enter any credentials to continue.',
+      'login.error': 'Enter an email and password to continue.',
+
+      'dash.badge': 'Control panel',
+      'dash.logout': 'Log out',
+      'dash.fleetTitle': 'My fleet',
+      'dash.statusOnline': 'Online',
+      'dash.statusCharging': 'Charging',
+      'dash.statusOffline': 'Offline',
+      'dash.typeSubmarine': 'Submarine',
+      'dash.typeBoat': 'Boat',
+      'dash.battery': 'Battery',
+      'dash.batteryPropulsion': 'Propulsion (2P6S)',
+      'dash.batteryElectronics': 'Electronics (6P2S)',
+      'dash.cameraTitle': 'Live camera',
+      'dash.cameraOfflineTitle': 'Camera unavailable',
+      'dash.cameraOfflineHint': "The vehicle isn't streaming video right now.",
+      'dash.telemetryTitle': 'Telemetry',
+      'dash.location': 'Exact location',
+      'dash.tempInternal': 'Internal temperature',
+      'dash.tempExternal': 'External temperature',
+      'dash.pressureInternal': 'Internal pressure',
+      'dash.pressureExternal': 'External pressure',
+      'dash.humidity': 'Internal humidity',
+      'dash.motor1': 'Motor 1 current',
+      'dash.motor2': 'Motor 2 current',
+      'dash.notAvailable': 'Not available',
+      'dash.depthTitle': 'Current depth',
+      'dash.ledTitle': 'Lighting control',
+      'dash.ledFront': 'Front LEDs',
+      'dash.ledSideVert': 'Side LEDs up–down',
+      'dash.ledSideHoriz': 'Side LEDs left–right',
+      'dash.ledLeft': 'Left',
+      'dash.ledRight': 'Right',
+      'dash.ledUp': 'Up',
+      'dash.ledDown': 'Down',
+      'dash.moveTitle': 'Movement control',
+      'dash.moveForward': 'Forward',
+      'dash.moveBack': 'Back',
+      'dash.turnLeft': 'Turn left',
+      'dash.turnRight': 'Turn right',
+      'dash.stop': 'Stop',
+      'dash.dive': 'Dive',
+      'dash.surface': 'Surface',
+      'dash.lastCommand': 'Last command',
+      'dash.noCommand': '—',
+      'dash.selectHint': 'Select a vehicle from the fleet to see telemetry and controls.',
+      'dash.emptyBoatLed': 'The boat has no controllable LEDs.',
+      'dash.emptyBoatDive': 'Boats stay on the surface — no dive control.',
+      'dash.locBalea': 'Bâlea Lake, RO',
+
+      'vehicle.alpha': 'Fisheye100M — Alpha',
+      'vehicle.beta': 'Fisheye100M — Beta',
+      'vehicle.boat': 'Fisheye Boat',
+
+      'a11y.themeToggle': 'Toggle light/dark theme',
+      'a11y.navToggle': 'Open menu',
+    }
+  };
+
+  var STORAGE_KEY = 'fisheye-lang';
+  var current = localStorage.getItem(STORAGE_KEY) || 'ro';
+  if (!dict[current]) current = 'ro';
+
+  function t(key) {
+    return (dict[current] && dict[current][key]) || dict.ro[key] || key;
+  }
+
+  function apply() {
+    document.documentElement.setAttribute('lang', current);
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      el.textContent = t(el.getAttribute('data-i18n'));
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function (el) {
+      el.innerHTML = t(el.getAttribute('data-i18n-html'));
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+      el.setAttribute('placeholder', t(el.getAttribute('data-i18n-placeholder')));
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+      el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria')));
+    });
+    document.querySelectorAll('.lang-btn').forEach(function (btn) {
+      btn.classList.toggle('is-active', btn.getAttribute('data-lang') === current);
+    });
+    window.dispatchEvent(new CustomEvent('fisheye-lang-changed', { detail: { lang: current } }));
+  }
+
+  function setLang(lang) {
+    if (!dict[lang] || lang === current) return;
+    current = lang;
+    localStorage.setItem(STORAGE_KEY, current);
+    apply();
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.lang-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setLang(btn.getAttribute('data-lang'));
+      });
+    });
+    apply();
+  });
+
+  window.FisheyeI18n = { t: t, setLang: setLang, getLang: function () { return current; } };
+})();

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panou de control — Fisheye100M</title>
+<meta name="description" content="Panou de control pentru flota Fisheye100M — telemetrie live, cameră, iluminare și control mișcare.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%2305080d%22/><circle cx=%2250%22 cy=%2250%22 r=%2230%22 fill=%22none%22 stroke=%22%2322d3ee%22 stroke-width=%224%22/><circle cx=%2250%22 cy=%2250%22 r=%2210%22 fill=%22%2322d3ee%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>
+(function () {
+  var stored = localStorage.getItem('fisheye-theme');
+  var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  document.documentElement.setAttribute('data-theme', theme);
+  if (localStorage.getItem('fisheye-auth') !== 'true') {
+    window.location.replace('login.html');
+  }
+})();
+</script>
+</head>
+<body>
+
+<div class="bg-fx" aria-hidden="true">
+  <div class="bubbles">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+</div>
+
+<header class="site-header is-scrolled" id="site-header">
+  <div class="header-inner header-inner-full">
+    <a href="index.html" class="logo">
+      <img class="logo-mark" src="logo.svg" alt="Fisheye100M">
+    </a>
+    <span class="header-badge" data-i18n="dash.badge">Panou de control</span>
+    <div class="header-actions header-actions-end">
+      <div class="lang-toggle" id="lang-toggle" role="group" aria-label="Limbă / Language">
+        <button type="button" class="lang-btn is-active" data-lang="ro">RO</button>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Comută tema deschis/întunecat" data-i18n-aria="a11y.themeToggle">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
+      </button>
+      <button class="btn btn-ghost btn-sm" id="logout-btn" data-i18n="dash.logout">Deconectare</button>
+    </div>
+  </div>
+</header>
+
+<div class="app-shell">
+  <aside class="app-sidebar">
+    <p class="sidebar-title" data-i18n="dash.fleetTitle">Flota mea</p>
+    <div class="fleet-list" id="fleet-list"></div>
+  </aside>
+
+  <main class="app-main">
+    <div class="vehicle-header">
+      <h1 id="vehicle-name">—</h1>
+      <div class="vehicle-header-meta">
+        <span class="status-pill" id="vehicle-status"></span>
+        <div class="battery-group" id="battery-group"></div>
+      </div>
+    </div>
+
+    <div class="dash-grid">
+
+      <div class="panel-card" id="camera-card">
+        <p class="panel-title" data-i18n="dash.cameraTitle">Cameră live</p>
+        <div class="camera-frame" id="camera-frame">
+          <span class="camera-live-badge" id="camera-live-badge">LIVE</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h11l2-2h3v14H4z"/><circle cx="12" cy="14" r="3.5"/></svg>
+          <span class="camera-timestamp" id="camera-timestamp"></span>
+          <span class="camera-offline-msg" id="camera-offline-msg" data-i18n="dash.cameraOfflineHint">Vehiculul nu transmite imagine în acest moment.</span>
+        </div>
+      </div>
+
+      <div class="panel-card" id="depth-card">
+        <p class="panel-title" data-i18n="dash.depthTitle">Adâncime curentă</p>
+        <div id="depth-content">
+          <div class="depth-readout">
+            <span class="num" id="depth-num">0</span>
+            <span class="unit">m</span>
+          </div>
+          <div class="dg-track">
+            <div class="dg-fill" id="dg-fill"></div>
+            <div class="dg-dot" id="dg-dot"></div>
+          </div>
+          <div class="dg-labels"><span>0m</span><span>25m</span><span>50m</span><span>75m</span><span>100m</span></div>
+          <div class="dive-controls">
+            <button class="dive-btn" id="btn-dive" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16M6 14l6 6 6-6"/></svg>
+              <span data-i18n="dash.dive">Scufundare</span>
+            </button>
+            <button class="dive-btn" id="btn-surface" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V4M6 10l6-6 6 6"/></svg>
+              <span data-i18n="dash.surface">Ridicare</span>
+            </button>
+          </div>
+        </div>
+        <p class="panel-hint" id="depth-hint" data-i18n="dash.emptyBoatDive" hidden>Bărcile rămân la suprafață — fără control de scufundare.</p>
+
+        <div class="panel-divider"></div>
+
+        <p class="panel-title" data-i18n="dash.moveTitle">Control mișcare</p>
+        <div class="dpad-wrap">
+          <div class="dpad">
+            <button class="dpad-btn dpad-fwd" type="button" data-cmd="forward" data-i18n-aria="dash.moveForward" aria-label="Înainte">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V4M6 10l6-6 6 6"/></svg>
+            </button>
+            <button class="dpad-btn dpad-left" type="button" data-cmd="turnLeft" data-i18n-aria="dash.turnLeft" aria-label="Virare stânga">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M10 6l-6 6 6 6"/></svg>
+            </button>
+            <button class="dpad-btn dpad-stop" type="button" data-cmd="stop" data-i18n="dash.stop">Stop</button>
+            <button class="dpad-btn dpad-right" type="button" data-cmd="turnRight" data-i18n-aria="dash.turnRight" aria-label="Virare dreapta">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12H4M14 6l6 6-6 6"/></svg>
+            </button>
+            <button class="dpad-btn dpad-back" type="button" data-cmd="back" data-i18n-aria="dash.moveBack" aria-label="Înapoi">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16M6 14l6 6 6-6"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="cmd-log">
+          <span data-i18n="dash.lastCommand">Ultima comandă</span>:
+          <strong id="last-command">—</strong>
+        </div>
+      </div>
+
+      <div class="panel-card dash-grid-full" id="telemetry-card">
+        <p class="panel-title" data-i18n="dash.telemetryTitle">Telemetrie</p>
+        <div class="telemetry-grid" id="telemetry-grid"></div>
+      </div>
+
+      <div class="panel-card dash-grid-full" id="led-card">
+        <p class="panel-title" data-i18n="dash.ledTitle">Control iluminare</p>
+        <div class="led-row">
+          <span class="led-row-label" data-i18n="dash.ledFront">LED frontale</span>
+          <div class="led-switches">
+            <label class="led-switch-unit"><span data-i18n="dash.ledLeft">Stânga</span><span class="switch"><input type="checkbox" data-led="frontL"><span class="switch-track"></span></span></label>
+            <label class="led-switch-unit"><span data-i18n="dash.ledRight">Dreapta</span><span class="switch"><input type="checkbox" data-led="frontR"><span class="switch-track"></span></span></label>
+          </div>
+        </div>
+        <div class="led-row">
+          <span class="led-row-label" data-i18n="dash.ledSideVert">LED laterale sus–jos</span>
+          <div class="led-switches">
+            <label class="led-switch-unit"><span data-i18n="dash.ledUp">Sus</span><span class="switch"><input type="checkbox" data-led="vertUp"><span class="switch-track"></span></span></label>
+            <label class="led-switch-unit"><span data-i18n="dash.ledDown">Jos</span><span class="switch"><input type="checkbox" data-led="vertDown"><span class="switch-track"></span></span></label>
+          </div>
+        </div>
+        <div class="led-row">
+          <span class="led-row-label" data-i18n="dash.ledSideHoriz">LED laterale stânga–dreapta</span>
+          <div class="led-switches">
+            <label class="led-switch-unit"><span data-i18n="dash.ledLeft">Stânga</span><span class="switch"><input type="checkbox" data-led="horizL"><span class="switch-track"></span></span></label>
+            <label class="led-switch-unit"><span data-i18n="dash.ledRight">Dreapta</span><span class="switch"><input type="checkbox" data-led="horizR"><span class="switch-track"></span></span></label>
+          </div>
+        </div>
+        <p class="panel-hint" id="led-hint" data-i18n="dash.emptyBoatLed" hidden>Barca nu are LED-uri controlabile.</p>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="theme.js"></script>
+<script src="i18n.js"></script>
+<script src="control.js"></script>
+</body>
+</html>
