@@ -6,19 +6,23 @@ const onScroll = () => {
 document.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
-// Mobile nav toggle
-const navToggle = document.getElementById('nav-toggle');
-const mainNav = document.getElementById('main-nav');
-navToggle.addEventListener('click', () => {
-  const isOpen = mainNav.classList.toggle('is-open');
-  navToggle.setAttribute('aria-expanded', String(isOpen));
-});
-mainNav.querySelectorAll('a').forEach((link) => {
-  link.addEventListener('click', () => {
-    mainNav.classList.remove('is-open');
-    navToggle.setAttribute('aria-expanded', 'false');
-  });
-});
+// Nav dots — active section on scroll
+const navDots = document.querySelectorAll('.nav-dot');
+const navSections = Array.from(navDots)
+  .map((dot) => document.getElementById(dot.dataset.section))
+  .filter(Boolean);
+const navObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navDots.forEach((dot) => dot.classList.toggle('is-active', dot.dataset.section === id));
+      }
+    });
+  },
+  { rootMargin: '-45% 0px -45% 0px' }
+);
+navSections.forEach((section) => navObserver.observe(section));
 
 // Scroll reveal
 const revealEls = document.querySelectorAll('.reveal');

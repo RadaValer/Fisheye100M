@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Autentificare — Fisheye100M Control Panel</title>
-<meta name="description" content="Autentifică-te pentru a accesa panoul de control al flotei Fisheye100M.">
+<title>Jurnal de construcție — Fisheye100M</title>
+<meta name="description" content="Jurnalul de construcție al submarinului Fisheye100M — de la proiectare la primul test în apă.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%2305080d%22/><circle cx=%2250%22 cy=%2250%22 r=%2230%22 fill=%22none%22 stroke=%22%2322d3ee%22 stroke-width=%224%22/><circle cx=%2250%22 cy=%2250%22 r=%2210%22 fill=%22%2322d3ee%22/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,9 +16,6 @@
   var stored = localStorage.getItem('fisheye-theme');
   var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
   document.documentElement.setAttribute('data-theme', theme);
-  if (window.FisheyeApi.getSession()) {
-    window.location.replace('dashboard.html');
-  }
 })();
 </script>
 </head>
@@ -47,37 +44,32 @@
   </div>
 </div>
 
-<main class="auth-shell">
-  <div class="auth-card">
-    <div class="auth-icon" aria-hidden="true"><span></span></div>
-    <h1 data-i18n="login.title">Autentificare operator</h1>
-    <p class="auth-sub" data-i18n="login.subtitle">Accesează panoul de control al flotei Fisheye100M.</p>
+<main>
+  <section class="section build-hero">
+    <div class="wrap">
+      <p class="section-kicker reveal" data-i18n="build.kicker">Jurnal de construcție</p>
+      <h1 class="reveal" data-i18n="build.title">De la desen tehnic la primul test în apă.</h1>
+      <p class="lede-text reveal" data-i18n="build.lede">
+        O privire pas cu pas asupra construcției fizice a lui Fisheye100M — ce am făcut, în ce ordine,
+        și ce am învățat pe parcurs. Fiecare etapă include poze sau video din laborator/atelier.
+      </p>
 
-    <p class="form-error" id="login-error" hidden data-i18n="login.error">Completează email și parolă pentru a continua.</p>
-
-    <form id="login-form" novalidate>
-      <div class="form-field">
-        <label for="email" data-i18n="login.emailLabel">Email</label>
-        <input class="field-input" type="email" id="email" name="email" placeholder="operator@fisheye100m.dev" autocomplete="username">
-      </div>
-      <div class="form-field">
-        <label for="password" data-i18n="login.passwordLabel">Parolă</label>
-        <input class="field-input" type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password">
-      </div>
-      <label class="field-check">
-        <input type="checkbox" id="remember" checked>
-        <span data-i18n="login.remember">Ține-mă minte</span>
-      </label>
-      <button type="submit" class="btn btn-primary" data-i18n="login.submit">Intră în control panel</button>
-    </form>
-
-    <p class="form-note" data-i18n="login.demoNote">Cont demo: operator@fisheye100m.dev / fisheye2026</p>
-    <p class="form-note"><a class="auth-back" href="index.html" data-i18n="login.back">← Înapoi la site</a></p>
-  </div>
+      <div class="build-timeline" id="build-timeline"></div>
+    </div>
+  </section>
 </main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span class="logo footer-logo">
+      <img class="logo-mark" src="logo.svg" alt="Fisheye100M">
+    </span>
+    <a href="index.html" class="footer-link" data-i18n="build.backLink">← Înapoi la site</a>
+  </div>
+</footer>
 
 <script src="theme.js"></script>
 <script src="i18n.js"></script>
-<script src="login.js"></script>
+<script src="build.js"></script>
 </body>
 </html>

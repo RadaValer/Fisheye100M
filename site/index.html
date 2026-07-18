@@ -32,17 +32,13 @@
     <a href="#top" class="logo">
       <img class="logo-mark" src="logo.svg" alt="Fisheye100M">
     </a>
-    <nav class="main-nav" id="main-nav">
-      <a href="#problema" data-i18n="nav.problema">Problema</a>
-      <a href="#solutia" data-i18n="nav.solutia">Soluția</a>
-      <a href="#functionare" data-i18n="nav.functionare">Cum funcționează</a>
-      <a href="#specificatii" data-i18n="nav.specificatii">Specificații</a>
-      <a href="#barca" data-i18n="nav.barca">Barca însoțitoare</a>
-      <a href="dashboard.html" class="nav-control">
-        <svg class="nav-control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M12 11.2V17"/><path d="M8 20.5c0-1.8 1.8-3 4-3s4 1.2 4 3"/></svg>
-        <span data-i18n="nav.control">Panou de control</span>
-      </a>
-      <a href="#contact" class="nav-cta" data-i18n="nav.contact">Contact</a>
+    <nav class="nav-dots" id="main-nav" aria-label="Navigare secțiuni">
+      <a href="#problema" class="nav-dot" data-section="problema" data-i18n-tip="nav.problema" data-i18n-aria="nav.problema" aria-label="Problema"><span></span></a>
+      <a href="#solutia" class="nav-dot" data-section="solutia" data-i18n-tip="nav.solutia" data-i18n-aria="nav.solutia" aria-label="Soluția"><span></span></a>
+      <a href="#functionare" class="nav-dot" data-section="functionare" data-i18n-tip="nav.functionare" data-i18n-aria="nav.functionare" aria-label="Cum funcționează"><span></span></a>
+      <a href="#specificatii" class="nav-dot" data-section="specificatii" data-i18n-tip="nav.specificatii" data-i18n-aria="nav.specificatii" aria-label="Specificații"><span></span></a>
+      <a href="#modularitate" class="nav-dot" data-section="modularitate" data-i18n-tip="nav.modularitate" data-i18n-aria="nav.modularitate" aria-label="Modularitate"><span></span></a>
+      <a href="#barca" class="nav-dot" data-section="barca" data-i18n-tip="nav.barca" data-i18n-aria="nav.barca" aria-label="Barca însoțitoare"><span></span></a>
     </nav>
     <div class="header-actions">
       <div class="lang-toggle" id="lang-toggle" role="group" aria-label="Limbă / Language">
@@ -53,9 +49,10 @@
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
       </button>
-      <button class="nav-toggle" id="nav-toggle" aria-label="Deschide meniul" aria-expanded="false" data-i18n-aria="a11y.navToggle">
-        <span></span><span></span><span></span>
-      </button>
+      <a href="dashboard.html" class="nav-control">
+        <svg class="nav-control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M12 11.2V17"/><path d="M8 20.5c0-1.8 1.8-3 4-3s4 1.2 4 3"/></svg>
+        <span data-i18n="nav.control">Panou de control</span>
+      </a>
     </div>
   </div>
 </header>
@@ -89,15 +86,7 @@
             <span>0m</span><span>25m</span><span>50m</span><span>75m</span><span>100m</span>
           </div>
         </div>
-        <svg class="sub-illustration" viewBox="0 0 480 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="240" cy="110" rx="210" ry="20" class="fl-tint"/>
-          <path d="M40 110 C40 70 100 55 170 55 L330 55 C400 55 440 80 440 110 C440 140 400 165 330 165 L170 165 C100 165 40 150 40 110 Z" class="ln-accent" stroke-width="2" opacity="0.8"/>
-          <circle cx="90" cy="110" r="14" class="ln-accent-2" stroke-width="2"/>
-          <circle cx="90" cy="110" r="5" class="fl-accent-2"/>
-          <path d="M330 55 C400 55 440 80 440 110 C440 140 400 165 330 165" class="ln-warm" stroke-width="1.5" opacity="0.6" stroke-dasharray="2 4"/>
-          <path d="M170 55 L170 165 M250 55 L250 165" class="ln-accent" stroke-width="1" opacity="0.3"/>
-          <path d="M440 110 L470 110 M40 110 L15 100 M40 110 L15 120" class="ln-accent" stroke-width="2" opacity="0.7" stroke-linecap="round"/>
-        </svg>
+        <img class="hero-logo" src="logo.svg" alt="Fisheye100M">
       </div>
     </div>
     <div class="scroll-cue" aria-hidden="true"><span></span></div>
@@ -340,9 +329,56 @@
     </div>
   </section>
 
+  <!-- MODULARITATE -->
+  <section class="section" id="modularitate">
+    <div class="wrap">
+      <p class="section-kicker reveal" data-i18n="modularitate.kicker">05 — Filozofie de proiectare</p>
+      <h2 class="reveal" data-i18n="modularitate.title">Fiecare piesă, gândită să fie demontată.</h2>
+      <p class="lede-text reveal" data-i18n="modularitate.lede">
+        Fisheye100M nu e o cutie sigilată — e un sistem construit din module independente, prinse cu șuruburi
+        și O-ringuri standard, nu cu piese turnate la comandă. Corpul presurizat, cilindrii de balast, pod-urile
+        de propulsie și compartimentul electronic se pot demonta și remonta separat, folosind unelte și
+        componente pe care le găsești în orice magazin de bricolaj din lume. Această filozofie transformă
+        construcția, întreținerea și upgrade-ul submarinului dintr-o operațiune de laborator într-o simplă
+        sesiune de șurubelniță — pe masă, pe teren, oriunde e nevoie.
+      </p>
+
+      <div class="card-grid reveal">
+        <article class="system-card">
+          <div class="system-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48"><path d="M32 8a8 8 0 0 0-10.9 9.4L10 28.5V38h9.5l11.1-11.1A8 8 0 0 0 40 16l-6 6-4-4 6-6a8 8 0 0 0-4-4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 data-i18n="modularitate.card1_title">Piese standard, nu proprietare</h3>
+          <p data-i18n="modularitate.card1_desc">Șuruburi M3/M8, țevi PPR și O-ringuri de dimensiuni comerciale — nimic nu depinde de o piesă unicat, greu de înlocuit.</p>
+        </article>
+        <article class="system-card">
+          <div class="system-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48"><path d="M24 6 6 16l18 10 18-10Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M6 24l18 10 18-10M6 32l18 10 18-10" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 data-i18n="modularitate.card2_title">Module complet independente</h3>
+          <p data-i18n="modularitate.card2_desc">Corpul, balastul, propulsia și electronica se separă unele de altele — repari sau înlocuiești un modul fără să atingi restul.</p>
+        </article>
+        <article class="system-card">
+          <div class="system-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48"><path d="M38 14a14 14 0 0 0-24.2-4M10 34a14 14 0 0 0 24.2 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 8v8h8M40 40v-8h-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 data-i18n="modularitate.card3_title">Upgrade fără să demontezi tot</h3>
+          <p data-i18n="modularitate.card3_desc">Bateria, camera sau un senzor intră și ies prin capace dedicate, în câteva minute — fără să deschizi tot corpul presurizat.</p>
+        </article>
+        <article class="system-card">
+          <div class="system-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="17" stroke="currentColor" stroke-width="2"/><path d="M7 24h34M24 7c4.5 4.7 7 10.6 7 17s-2.5 12.3-7 17c-4.5-4.7-7-10.6-7-17s2.5-12.3 7-17Z" stroke="currentColor" stroke-width="2"/></svg>
+          </div>
+          <h3 data-i18n="modularitate.card4_title">Reparabil oriunde, de oricine</h3>
+          <p data-i18n="modularitate.card4_desc">Fără unelte speciale, fără fabrică, fără piese turnate la comandă. Dacă se strică ceva pe teren, se repară pe teren.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- BARCA -->
   <section class="section" id="barca">
-    <div class="wrap barca-grid">
+    <div class="wrap">
       <div class="reveal">
         <p class="section-kicker" data-i18n="barca.kicker">05 — Concept</p>
         <h2 data-i18n="barca.title">Barca însoțitoare</h2>
@@ -360,18 +396,6 @@
           <li data-i18n-html="barca.6"><span>Poziționare</span><span>GPS propriu, urmărire traseu submarin</span></li>
           <li data-i18n-html="barca.7"><span>Andocare</span><span>Contacte electrice etanșe pentru reîncărcare</span></li>
         </ul>
-      </div>
-      <div class="reveal boat-visual" aria-hidden="true">
-        <svg viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M40 140 Q160 120 280 140 L260 165 Q160 180 60 165 Z" class="ln-accent" stroke-width="2" opacity="0.85"/>
-          <rect x="120" y="90" width="80" height="50" rx="4" class="ln-accent-2" stroke-width="2"/>
-          <line x1="160" y1="90" x2="160" y2="50" class="ln-accent-2" stroke-width="2"/>
-          <path d="M160 50 L200 65 L160 65 Z" class="ln-warm" stroke-width="1.5"/>
-          <path d="M20 150 C 60 140, 100 158, 160 150 C 220 142, 260 158, 300 150" class="ln-accent" stroke-width="1.5" opacity="0.45"/>
-          <circle cx="160" cy="185" r="3" class="fl-accent"/>
-          <line x1="160" y1="165" x2="160" y2="200" class="ln-accent" stroke-width="1" stroke-dasharray="3 4" opacity="0.6"/>
-          <circle cx="160" cy="205" r="6" class="ln-accent" stroke-width="1.5" opacity="0.75"/>
-        </svg>
       </div>
     </div>
   </section>
@@ -393,6 +417,7 @@
       <img class="logo-mark" src="logo.svg" alt="Fisheye100M">
     </span>
     <p data-i18n="footer.tagline">Submarin autonom de explorare subacvatică · 100m adâncime maximă</p>
+    <a href="build.html" class="footer-link" data-i18n="footer.buildLog">Jurnal de construcție</a>
   </div>
 </footer>
 

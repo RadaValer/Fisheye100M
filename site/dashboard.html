@@ -10,12 +10,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script src="api.js"></script>
 <script>
 (function () {
   var stored = localStorage.getItem('fisheye-theme');
   var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
   document.documentElement.setAttribute('data-theme', theme);
-  if (localStorage.getItem('fisheye-auth') !== 'true') {
+  if (!window.FisheyeApi.getSession()) {
     window.location.replace('login.html');
   }
 })();
@@ -52,13 +53,22 @@
 
 <div class="app-shell">
   <aside class="app-sidebar">
-    <p class="sidebar-title" data-i18n="dash.fleetTitle">Flota mea</p>
+    <div class="sidebar-header">
+      <p class="sidebar-title" data-i18n="dash.fleetTitle">Flota mea</p>
+      <button class="icon-btn" id="add-vehicle-btn" type="button" data-i18n-aria="dash.addVehicleAria" aria-label="Adaugă vas">+</button>
+    </div>
     <div class="fleet-list" id="fleet-list"></div>
   </aside>
 
   <main class="app-main">
     <div class="vehicle-header">
-      <h1 id="vehicle-name">—</h1>
+      <div class="vehicle-title-row">
+        <h1 id="vehicle-name">—</h1>
+        <input type="text" id="vehicle-name-input" class="vehicle-name-input" hidden>
+        <button class="icon-btn" id="rename-btn" type="button" data-i18n-aria="dash.renameAria" aria-label="Redenumește vehiculul">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        </button>
+      </div>
       <div class="vehicle-header-meta">
         <span class="status-pill" id="vehicle-status"></span>
         <div class="battery-group" id="battery-group"></div>
@@ -66,6 +76,28 @@
     </div>
 
     <div class="dash-grid">
+
+      <div class="panel-card dash-grid-full" id="session-card">
+        <p class="panel-title" data-i18n="dash.sessionTitle">Sesiune curentă</p>
+        <div class="session-grid">
+          <div class="session-tile">
+            <div class="tel-label" data-i18n="dash.sessionStatus">Status curent</div>
+            <div class="tel-value" id="session-status">—</div>
+          </div>
+          <div class="session-tile">
+            <div class="tel-label" data-i18n="dash.sessionAway">Timp de la lansare</div>
+            <div class="tel-value" id="session-deployed">—</div>
+          </div>
+          <div class="session-tile" id="session-submerged-tile">
+            <div class="tel-label" data-i18n="dash.sessionSubmerged">Timp sub apă (sesiune)</div>
+            <div class="tel-value" id="session-submerged">—</div>
+          </div>
+          <div class="session-tile" id="session-surface-tile">
+            <div class="tel-label" data-i18n="dash.sessionSurface">Timp la suprafață (sesiune)</div>
+            <div class="tel-value" id="session-surface">—</div>
+          </div>
+        </div>
+      </div>
 
       <div class="panel-card" id="camera-card">
         <p class="panel-title" data-i18n="dash.cameraTitle">Cameră live</p>
@@ -99,6 +131,14 @@
               <span data-i18n="dash.surface">Ridicare</span>
             </button>
           </div>
+          <form class="depth-target-row" id="depth-target-form">
+            <label for="depth-target-input" data-i18n="dash.targetDepth">Adâncime țintă</label>
+            <div class="depth-target-field">
+              <input type="number" id="depth-target-input" min="0" max="100" step="0.5" placeholder="0.0">
+              <span class="unit">m</span>
+              <button type="submit" class="btn btn-ghost btn-sm" data-i18n="dash.goTo">Du-te</button>
+            </div>
+          </form>
         </div>
         <p class="panel-hint" id="depth-hint" data-i18n="dash.emptyBoatDive" hidden>Bărcile rămân la suprafață — fără control de scufundare.</p>
 
@@ -122,9 +162,18 @@
             </button>
           </div>
         </div>
-        <div class="cmd-log">
-          <span data-i18n="dash.lastCommand">Ultima comandă</span>:
-          <strong id="last-command">—</strong>
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot terminal-dot-red"></span>
+            <span class="terminal-dot terminal-dot-yellow"></span>
+            <span class="terminal-dot terminal-dot-green"></span>
+            <span class="terminal-title" data-i18n="dash.terminalTitle">Consolă comenzi</span>
+          </div>
+          <div class="terminal-output" id="terminal-output"></div>
+          <form class="terminal-input-row" id="terminal-form">
+            <span class="terminal-prompt">&gt;</span>
+            <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" spellcheck="false" data-i18n-placeholder="dash.terminalPlaceholder" placeholder="scrie o comandă…">
+          </form>
         </div>
       </div>
 
@@ -159,8 +208,55 @@
         <p class="panel-hint" id="led-hint" data-i18n="dash.emptyBoatLed" hidden>Barca nu are LED-uri controlabile.</p>
       </div>
 
+      <div class="panel-card dash-grid-full" id="vehicle-log-card">
+        <p class="panel-title" data-i18n="dash.logTitle">Jurnal vehicul</p>
+        <div class="telemetry-grid" id="vehicle-log-grid"></div>
+      </div>
+
     </div>
   </main>
+</div>
+
+<div class="modal-overlay" id="vehicle-info-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="info-modal-title">—</h2>
+      <button class="icon-btn" id="info-modal-close" type="button" data-i18n-aria="dash.closeAria" aria-label="Închide">✕</button>
+    </div>
+    <div class="telemetry-grid" id="info-modal-grid"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="add-vehicle-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 data-i18n="dash.addVehicleTitle">Adaugă vas nou</h2>
+      <button class="icon-btn" id="add-vehicle-close" type="button" data-i18n-aria="dash.closeAria" aria-label="Închide">✕</button>
+    </div>
+    <p class="form-error" id="add-vehicle-error" hidden></p>
+    <form id="add-vehicle-form" novalidate>
+      <div class="form-field">
+        <label for="new-vehicle-name" data-i18n="dash.vehicleName">Nume</label>
+        <input class="field-input" type="text" id="new-vehicle-name" data-i18n-placeholder="dash.vehicleNamePlaceholder" placeholder="ex: Fisheye100M — Gamma">
+      </div>
+      <div class="form-field">
+        <label for="new-vehicle-type" data-i18n="dash.vehicleType">Tip</label>
+        <select class="field-input" id="new-vehicle-type">
+          <option value="submarine" data-i18n="dash.typeSubmarine">Submarin</option>
+          <option value="boat" data-i18n="dash.typeBoat">Barcă</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="new-vehicle-reg" data-i18n="dash.regNumber">Nr. înmatriculare</label>
+        <input class="field-input" type="text" id="new-vehicle-reg" autocomplete="off">
+      </div>
+      <div class="form-field">
+        <label for="new-vehicle-password" data-i18n="login.passwordLabel">Parolă</label>
+        <input class="field-input" type="password" id="new-vehicle-password" autocomplete="new-password">
+      </div>
+      <button type="submit" class="btn btn-primary" data-i18n="dash.addVehicleSubmit">Adaugă la flotă</button>
+    </form>
+  </div>
 </div>
 
 <script src="theme.js"></script>
